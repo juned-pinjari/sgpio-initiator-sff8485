@@ -1,1 +1,10 @@
+# Documentation & local notes
 docs/
+
+# ModelSim temporary outputs
+sim/work/
+sim/transcript
+modelsim.ini
+*.wlf
+wlft*
+*.vcd
