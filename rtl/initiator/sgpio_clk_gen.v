@@ -1,5 +1,5 @@
 module sgpio_clk_gen #(
-    parameter CLK_DIV = 500           // Use even values for CLK_DIV
+    parameter CLK_DIV = 500           // Use an even value greater than 1
 )(
     input  clk,
     input  rst_n,

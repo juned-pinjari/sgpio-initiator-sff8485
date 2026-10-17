@@ -24,6 +24,29 @@ module tb_sgpio_clk_gen;
 
     integer  errors = 0;
 
+    // Procedural strobe checks
+    always @(posedge clk) begin
+        if (rst_n) begin
+            // Strobes must be mutually exclusive
+            if (sclk_rise && sclk_fall) begin
+                errors = errors + 1;
+                $display("ERROR: rise and fall strobes asserted together at time %0t", $time);
+            end
+
+            // sclk_rise occurs on transition to high
+            if (sclk_rise && !sclk_out) begin
+                errors = errors + 1;
+                $display("ERROR: rise strobe not aligned with high SClock at time %0t", $time);
+            end
+
+            // sclk_fall occurs on transition to low
+            if (sclk_fall && sclk_out) begin
+                errors = errors + 1;
+                $display("ERROR: fall strobe not aligned with low SClock at time %0t", $time);
+            end
+        end
+    end
+
     initial begin
 
         $dumpfile("sgpio_clk_gen.vcd");
